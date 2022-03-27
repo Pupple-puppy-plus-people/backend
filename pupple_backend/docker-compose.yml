@@ -5,6 +5,8 @@ services:
                 image: postgres
                 ports:
                         - 5432:5432 
+                networks:
+                        some_network:
                 volumes:
                         - ./data/db:/var/lib/postgresql/data
                 environment:
@@ -26,3 +28,7 @@ services:
                         - ./:/home/backend/pupple_backend
                 depends_on:
                         - db
+                networks:
+                        some_network:
+networks:
+        some_network:

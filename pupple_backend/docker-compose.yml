@@ -9,6 +9,7 @@ services:
                         some_network:
                 volumes:
                         - ./data/db:/var/lib/postgresql/data
+                restart: always
                 environment:
                         - POSTGRES_DB=postgres
                         - POSTGRES_USER=postgres
@@ -28,6 +29,7 @@ services:
                         - ./:/home/backend/pupple_backend
                 depends_on:
                         - db
+                restart: always
                 networks:
                         some_network:
 networks:

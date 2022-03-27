@@ -49,7 +49,7 @@ MIDDLEWARE = [
 ]
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES' : [
-
+        'rest_framework.pagination.PageNumberPagination',
     ],
     'PAGE_SIZE':10
 }
@@ -79,8 +79,12 @@ WSGI_APPLICATION = 'pupple_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
 

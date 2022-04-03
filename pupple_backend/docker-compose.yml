@@ -13,5 +13,5 @@ services:
                 ports:
                         - 8000:8000
                 volumes:
-                        - ./:/home/backend/pupple_backend
+                        - ./:/var/jenkins_home/workspace/Pupple/backend/pupple_backend
                 restart: always

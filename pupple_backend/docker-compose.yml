@@ -15,7 +15,3 @@ services:
                 volumes:
                         - ./:/home/backend/pupple_backend
                 restart: always
-                networks:
-                        some_network:
-networks:
-        some_network:

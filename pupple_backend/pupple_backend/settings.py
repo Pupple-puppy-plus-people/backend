@@ -49,9 +49,8 @@ MIDDLEWARE = [
 ]
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES' : [
-        'rest_framework.pagination.PageNumberPagination',
+        'rest_framework.permissions.AllowAny',
     ],
-    'PAGE_SIZE':10
 }
 ROOT_URLCONF = 'pupple_backend.urls'
 

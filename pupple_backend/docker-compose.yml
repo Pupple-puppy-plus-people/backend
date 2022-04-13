@@ -1,36 +1,17 @@
 version: "3"
 
 services:
-        db:
-                image: postgres
-                ports:
-                        - 5432:5432 
-                networks:
-                        some_network:
-                volumes:
-                        - ./data/db:/var/lib/postgresql/data
-                restart: always
-                environment:
-                        - POSTGRES_DB=postgres
-                        - POSTGRES_USER=postgres
-                        - POSTGRES_PASSWORD=postgres
-                        - POSTGRES_INITDB_ARGS=--encoding=UTF-8
         web:
                 build:
                   context: .
                   dockerfile: ./localbind.Dockerfile
                 command: >
                        bash -c "
-                       python manage.py migrate
+                       python manage.py makemigrations
+                       && python manage.py migrate
                        && python manage.py runserver 0.0.0.0:8000"
                 ports:
                         - 8000:8000
                 volumes:
-                        - ./:/home/backend/pupple_backend
-                depends_on:
-                        - db
+                        - ./:/var/jenkins_home/workspace/Pupple/backend/pupple_backend
                 restart: always
-                networks:
-                        some_network:
-networks:
-        some_network:

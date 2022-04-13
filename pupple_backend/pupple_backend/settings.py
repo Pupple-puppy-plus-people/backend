@@ -29,6 +29,8 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'api',
+    'dogs',
+    'walkauth',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',

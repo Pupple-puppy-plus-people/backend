@@ -79,11 +79,11 @@ WSGI_APPLICATION = 'pupple_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'HOST': 'pupple-capstone2022.cn5c3cbimw6x.ap-northeast-2.rds.amazonaws.com',
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
-        'HOST': 'db',
         'PORT': 5432,
     }
 }

@@ -28,6 +28,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'api',
+    'dogs',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -35,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'api.apps.ApiConfig',
+    #'api.apps.ApiConfig',
     'users.apps.UsersConfig',
 ]
 

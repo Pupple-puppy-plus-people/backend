@@ -1,9 +1,9 @@
-from django.urls import path,include, re_path
+from django.urls import path,include
 from rest_framework import routers
 from . import views
 
 router = routers.DefaultRouter()
-router.register(r'',views.DogViewSet)
+router.register(r'',views.WalkAuthViewSet)
 
 urlpatterns = [
     path('',include(router.urls)),

@@ -5,7 +5,8 @@ RUN apt-get update
 
 Run pip install psycopg2
 Run pip install psycopg2-binary
-RUN pip install -r requirements.txt
+RUN pip freeze > requirements.txt
+RUN pip install -r "requirements.txt"
 
 EXPOSE 8000
 

@@ -7,15 +7,12 @@ services:
                   dockerfile: ./localbind.Dockerfile
                 command: >
                        bash -c "
-                       python manage.py makemigrations
+                       python manage.py migrate --fake
+                       && python manage.py makemigrations
                        && python manage.py migrate
                        && python manage.py runserver 0.0.0.0:8000"
                 ports:
                         - 8000:8000
                 volumes:
-                        - ./:/home/backend/pupple_backend
+                        - ./:/var/jenkins_home/workspace/Pupple/backend/pupple_backend
                 restart: always
-                networks:
-                        some_network:
-networks:
-        some_network:

@@ -6,7 +6,10 @@ services:
                   context: .
                   dockerfile: ./localbind.Dockerfile
                 command: >
-                       bash -c ""
+                       bash -c "
+                       python /home/jenkins/workspace/Pupple/backend/pupple_backend/pupple_backend/manage.py makemigrations &&
+                       python /home/jenkins/workspace/Pupple/backend/pupple_backend/pupple_backend/manage.py migrate &&
+                       python /home/jenkins/workspace/Pupple/backend/pupple_backend/pupple_backend/manage.py runserver 0.0.0.0:8000"
                 ports:
                         - 8000:8000
                 volumes:

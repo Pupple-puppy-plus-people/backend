@@ -6,5 +6,5 @@ router = routers.DefaultRouter()
 router.register(r'',views.WalkAuthViewSet)
 
 urlpatterns = [
-    path('',include(router.urls)),
+    path('<str:userdog>/',include(router.urls)),
 ]

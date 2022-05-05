@@ -8,5 +8,5 @@ router = routers.DefaultRouter()
 router.register(r'',views.PassConditionViewSet)
 
 urlpatterns = [
-    path('',include(router.urls))
+    path('<int:dog_id>/',include(router.urls))
 ]

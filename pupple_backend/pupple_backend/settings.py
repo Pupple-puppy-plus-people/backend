@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'api',
     'dogs',
     'walkauth',
+    'pass_condition',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',

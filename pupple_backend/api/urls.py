@@ -13,4 +13,5 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('dogs/',include('dogs.urls')),
     path('walkauth/',include('walkauth.urls')),
+    path('passcondition/',include('pass_condition.urls'))
 ]

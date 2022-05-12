@@ -28,6 +28,11 @@ class Dog(models.Model):
     introduction = models.CharField(max_length=1024, blank=True, null=True)
     approval = models.CharField(max_length=50, blank=True, null=True)
 
+    # 추가한 사항
+    user_id = models.CharField(max_length=50, blank=True, null=True)
+    house_auth = models.BooleanField(blank=True,default=False,null=True)
+    floor_auth = models.BooleanField(blank=True,default=False,null=True)
+
     class Meta:
         db_table = 'dog'
 

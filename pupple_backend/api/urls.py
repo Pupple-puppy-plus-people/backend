@@ -18,4 +18,6 @@ urlpatterns = [
     #path('createdog/',include('dogs.urls')), dogs/create
     #path('wishlist/',include('wishlist.urls')),
     #path('test/',include('test.urls')),
+    path('users/',include('users.urls')),
+    path('housephoto/',include('house_photo.urls')),
 ]

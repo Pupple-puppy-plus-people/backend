@@ -1,11 +1,13 @@
 from rest_framework import serializers
-from .models import User
-from .models import Profile
+from .models import User, Wishlist
+from dogs.models import Dog
+
+
+# from .models import Profile
 
 
 
 class RegistrationUserSerializer(serializers.ModelSerializer):
-
 
     class Meta:
         """
@@ -25,6 +27,7 @@ class RegistrationUserSerializer(serializers.ModelSerializer):
             password=self.validated_data['password']
         )
         user.set_password(self.validated_data['password'])
+        print(user)
         user.save()
         return user
     #     # exclude= ('id',)
@@ -55,3 +58,69 @@ class RegistrationUserSerializer(serializers.ModelSerializer):
     #     account.save()
     #     return account
 
+class LoginUserSerializer(serializers.Serializer):
+    email = serializers.EmailField(read_only=True)
+    password = serializers.CharField()
+    def __init__(self, data):
+        self.email = data['email']
+        self.password = data['password']
+
+
+class WishListSerializer(serializers.Serializer):
+
+    email = serializers.EmailField(read_only=True)
+    dog_id = serializers.CharField()
+
+    def __init__(self, data):
+        self.email = data['email']
+        if 'dog_id' in data:
+            self.dog_id = data['dog_id']
+        else:
+            self.dog_id = 0
+
+    def save(self):
+        data = {}
+        try:
+            user = User.objects.get(email=self.email)
+            dog = Dog.objects.get(id=self.dog_id)
+            print(Wishlist.objects.filter(user=user,dog_id=dog).exists())
+            if Wishlist.objects.filter(user=user,dog_id=dog).exists():
+                data['error'] = "fail"
+                data['response'] = "duplicate"
+                return data
+            else:
+                wishlist = Wishlist(
+                    user=user,
+                    dog_id=dog,
+                )
+                wishlist.save()
+                data['response'] = "success"
+                data['email'] = user.email
+                data['dog_id'] = dog.id
+        except:
+            data['error'] = "fail"
+
+        print(user)
+
+        return data
+
+    def delete(self):
+        user = User.objects.get(email=self.email)
+        dog = Dog.objects.get(id=self.dog_id)
+        wishlist = Wishlist.objects.get(user=user,dog_id=dog)
+        wishlist.delete()
+        return wishlist
+
+
+class WishListSerializer2(serializers.ModelSerializer):
+    class Meta:
+        model = Wishlist
+        exclude = ('id',)
+
+
+    def get(self):
+        user = User.objects.get(email=self.email)
+        wishlist = Wishlist.objects.get(user=user)
+        data={}
+        print(wishlist)
+        return wishlist

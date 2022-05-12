@@ -29,9 +29,10 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'api',
-    'dogs',
+    'dogs.apps.DogsConfig',
     'walkauth',
     'timestamp',
+    'house_photo',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework.authtoken',
     #'api.apps.ApiConfig',
     'users.apps.UsersConfig',
 ]
@@ -57,7 +59,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
     ]
 }
 ROOT_URLCONF = 'pupple_backend.urls'

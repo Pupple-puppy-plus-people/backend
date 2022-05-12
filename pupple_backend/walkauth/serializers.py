@@ -6,7 +6,11 @@ class WalkAuthSerializer(serializers.HyperlinkedModelSerializer):
         model = WalkAuth
         fields = (
             'id',
+            'userdog',
+            'day',
             'start_time',
             'elapsed_time',
+            'end_time',
             'distance',
+            'evaluate',
         )

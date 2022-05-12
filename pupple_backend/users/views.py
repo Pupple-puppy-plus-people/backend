@@ -80,6 +80,7 @@ def login_view(request):
                 # token = Token.objects.get(user=account).key
                 # data['token'] = token
                 data['address'] = user.address
+                data['id'] = user.id
             else:
                 data['error'] = "fail"
 

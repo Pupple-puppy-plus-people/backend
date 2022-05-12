@@ -21,5 +21,8 @@ class DogSerializer(serializers.HyperlinkedModelSerializer):
             'person_personality',
             'adoptation_status',
             'introduction',
-            'approval'
+            'approval',
+            'user_id',
+            'house_auth',
+            'floor_auth',
         )

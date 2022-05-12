@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'walkauth',
     'timestamp',
     'house_photo',
+    'pass_condition',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',

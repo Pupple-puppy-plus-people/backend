@@ -15,5 +15,5 @@ class WalkAuth(models.Model):
         db_table = 'walk_auth'
     
     def __str__(self):
-        return 'Walk Data'
+        return self.userdog
         # return self.user_name

@@ -21,7 +21,7 @@ class DogViewSet(viewsets.ModelViewSet):
         activity = self.request.GET.get('activity',None)
         person_personality = self.request.GET.get('person_personality',None)
         user_id = self.request.GET.get('user_id',None)
-          
+ 
         if gender:
             queryset = queryset.filter(gender=gender)
         if kind:
@@ -41,6 +41,6 @@ class DogViewSet(viewsets.ModelViewSet):
         if person_personality:
             queryset = queryset.filter(person_personality=person_personality)
         if user_id:
-            queryset = queryset.filter(user_id=user_id)    
-        
+            queryset = queryset.filter(user_id=user_id)   
+
         return queryset.order_by('id')

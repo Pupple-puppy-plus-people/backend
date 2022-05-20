@@ -1,3 +1,5 @@
+from rest_framework.response import Response
+from rest_framework.decorators import action, api_view
 from rest_framework import viewsets
 from .serializers import DogSerializer
 from .models import Dog
@@ -11,6 +13,7 @@ class DogViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = Dog.objects.all()
         
+        id = self.request.GET.get('id',None)
         gender = self.request.GET.get('gender',None)
         kind = self.request.GET.get('kind',None)
         desexing = self.request.GET.get('desexing',None)
@@ -22,6 +25,8 @@ class DogViewSet(viewsets.ModelViewSet):
         person_personality = self.request.GET.get('person_personality',None)
         user_id = self.request.GET.get('user_id',None)
  
+        if id:
+            queryset = queryset.filter(id=id)
         if gender:
             queryset = queryset.filter(gender=gender)
         if kind:
@@ -44,3 +49,16 @@ class DogViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(user_id=user_id)   
 
         return queryset.order_by('id')
+
+@api_view(['POST'])
+def updatephoto_view(request):
+    print("Here")
+   
+    if request.method == 'POST':
+        #serializer = DogSerializer(data=request.data)
+        #obj = serializer.save()
+        #image = request.POST.get(image=request.data['image'])
+        print("LOG raw image :: ")
+        #obj = create_photo(image)
+        #print("LOG url image :: ", obj)
+        return Response("hello")

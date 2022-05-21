@@ -1,4 +1,4 @@
-from tkinter import image_names
+from rest_framework.response import Response
 from rest_framework import viewsets
 from .serializers import DogSerializer
 from .models import Dog
@@ -13,12 +13,6 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
 
-from django.shortcuts import render 
-from rest_framework import status 
-from django.http.response import HttpResponse 
-from rest_framework.decorators import action
-
-
 class DogViewSet(viewsets.ModelViewSet):
     # queryset = Dog.objects.all().order_by('id')
     queryset = Dog.objects.all().order_by('id')
@@ -27,7 +21,7 @@ class DogViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = Dog.objects.all()
         
-        #id = self.request.GET.get('id',None)
+        id = self.request.GET.get('id',None)
         gender = self.request.GET.get('gender',None)
         kind = self.request.GET.get('kind',None)
         desexing = self.request.GET.get('desexing',None)
@@ -39,8 +33,8 @@ class DogViewSet(viewsets.ModelViewSet):
         person_personality = self.request.GET.get('person_personality',None)
         user_id = self.request.GET.get('user_id',None)
  
-        #if id:
-        #    queryset = queryset.filter(id=id)
+        if id:
+            queryset = queryset.filter(id=id)
         if gender:
             queryset = queryset.filter(gender=gender)
         if kind:

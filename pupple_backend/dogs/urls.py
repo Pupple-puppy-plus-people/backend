@@ -8,7 +8,7 @@ router.register(r'',views.DogViewSet)
 app_name='dogs'
 
 urlpatterns = [
-    path('list/',include(router.urls)), # 여기를 '' 였으면 무조건 여기로 받지.... shot term 
+    path('list/',include(router.urls)),
     path('add/',views.updatephoto_view),
 ]
 

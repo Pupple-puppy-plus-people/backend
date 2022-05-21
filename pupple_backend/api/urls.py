@@ -21,4 +21,6 @@ urlpatterns = [
     path('users/',include('users.urls')),
     path('housephoto/',include('house_photo.urls')),
     path('passcondition/',include('pass_condition.urls'))
+    #path('photologue/', include('photologue.urls', namespace='photologue')),
+
 ]

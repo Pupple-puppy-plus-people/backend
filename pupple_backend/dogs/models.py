@@ -12,7 +12,10 @@ from django.db import models
 # This adds all models in the database set as the default DB in settings.py to (app name)/models.py.
 class Dog(models.Model):
     registration_number = models.CharField(max_length=50, blank=True, null=True)
+
     image = models.CharField(max_length=128, blank=True, null=True)
+    #image = models.CharField('photologue.Photo',null=True,blank=True,on_delete=models.SET_NULL,)
+    
     name = models.CharField(max_length=50, blank=True, null=True)
     gender = models.CharField(max_length=50, blank=True, null=True)
     kind = models.CharField(max_length=50, blank=True, null=True)

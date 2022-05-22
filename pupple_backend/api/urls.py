@@ -20,5 +20,6 @@ urlpatterns = [
     #path('test/',include('test.urls')),
     path('users/',include('users.urls')),
     path('housephoto/',include('house_photo.urls')),
-    path('passcondition/',include('pass_condition.urls'))
+    path('passcondition/',include('pass_condition.urls')),
+    path('survey/',include('survey.urls')),
 ]

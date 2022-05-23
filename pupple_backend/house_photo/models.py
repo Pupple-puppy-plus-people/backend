@@ -7,6 +7,7 @@ class HousePhoto(models.Model):
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE, related_name="housephoto")
     photo = models.TextField()
     ispass = models.BooleanField(default=False)
-
+    username = models.TextField(blank=True,null=True)
+    
     def __str__(self):
         return self.user.email

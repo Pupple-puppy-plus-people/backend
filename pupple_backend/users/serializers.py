@@ -27,7 +27,7 @@ class RegistrationUserSerializer(serializers.ModelSerializer):
             password=self.validated_data['password']
         )
         user.set_password(self.validated_data['password'])
-        print(user)
+        # print(user)
         user.save()
         return user
     #     # exclude= ('id',)
@@ -83,7 +83,7 @@ class WishListSerializer(serializers.Serializer):
         try:
             user = User.objects.get(email=self.email)
             dog = Dog.objects.get(id=self.dog_id)
-            print(Wishlist.objects.filter(user=user,dog_id=dog).exists())
+            # print(Wishlist.objects.filter(user=user,dog_id=dog).exists())
             if Wishlist.objects.filter(user=user,dog_id=dog).exists():
                 data['error'] = "fail"
                 data['response'] = "duplicate"
@@ -100,7 +100,7 @@ class WishListSerializer(serializers.Serializer):
         except:
             data['error'] = "fail"
 
-        print(user)
+        # print(user)
 
         return data
 
@@ -122,5 +122,5 @@ class WishListSerializer2(serializers.ModelSerializer):
         user = User.objects.get(email=self.email)
         wishlist = Wishlist.objects.get(user=user)
         data={}
-        print(wishlist)
+        # print(wishlist)
         return wishlist

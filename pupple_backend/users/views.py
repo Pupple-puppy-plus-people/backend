@@ -81,6 +81,7 @@ def login_view(request):
                 # data['token'] = token
                 data['address'] = user.address
                 data['id'] = user.id
+                data['user_type'] = user.user_type
             else:
                 data['error'] = "fail"
 
@@ -113,8 +114,8 @@ def wishlistAdd_view(request):
         # data['address'] = account1.address
 
         checker = Wishlist.objects.all()
-        print("adding obj = ",obj)
-        print("checker = ",checker)
+        # print("adding obj = ",obj)
+        # print("checker = ",checker)
         return Response(obj)
 
 @api_view(['POST',])
@@ -124,7 +125,7 @@ def wishlistDel_view(request):
         serializer = WishListSerializer(data=request.data)
         #data = {}
         deleteobj = serializer.delete()
-        print(deleteobj)
+        # print(deleteobj)
         return Response("ok")
 
 @api_view(['POST', ])
@@ -136,7 +137,7 @@ def getAllWish_view(request):
 
         obj = Wishlist.objects.filter(user=user)
         serializer_class = WishListSerializer2(obj, many=True)
-        print(serializer_class)
+        # print(serializer_class)
         # serializer_class = WishListSerializer2(obj)
 
        # return Response(obj_json)

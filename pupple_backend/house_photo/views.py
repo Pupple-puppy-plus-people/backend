@@ -39,18 +39,18 @@ def get_all_mydog_photo_view(request):
         user = User.objects.get(email=request.data['email'])
         # 강아지 주인이 입양 보내려 하는 강아지들
         dog_obj = Dog.objects.filter(user_id=user.id)
-        print("dog : ", dog_obj)
+        # print("dog : ", dog_obj)
         obj = []
         for d in dog_obj:
-            print(d)
+            # print(d)
             if HousePhoto.objects.filter(dog=d).exists():
-                print("housephoto : ", HousePhoto.objects.filter(dog=d))
+                # print("housephoto : ", HousePhoto.objects.filter(dog=d))
 
                 obj += HousePhoto.objects.filter(dog=d)
         # obj = HousePhoto.objects.filter(dog=dog_obj, many=True)
-        print("obj : ",obj)
+        # print("obj : ",obj)
         serializer_class = SendHousePhotoSerializer(obj, many=True)
-        print("data[0] : ",serializer_class.data[0])
+        # print("data[0] : ",serializer_class.data[0])
         return Response(serializer_class.data)
 
 @api_view(['POST', ])
@@ -59,15 +59,29 @@ def get_one_dog_photo_view(request):
     if request.method == 'POST':
         # 입양 보내려 하는 강아지 한마리
         dog_obj = Dog.objects.get(id=request.data['dog_id'])
-        print("dog : ", dog_obj)
+        # print("dog : ", dog_obj)
         obj = []
-        print(dog_obj)
+        # print(dog_obj)
         if HousePhoto.objects.filter(dog=dog_obj).exists():
-            print("housephoto : ", HousePhoto.objects.filter(dog=dog_obj))
+            # print("housephoto : ", HousePhoto.objects.filter(dog=dog_obj))
 
             obj += HousePhoto.objects.filter(dog=dog_obj)
         # obj = HousePhoto.objects.filter(dog=dog_obj, many=True)
-        print("obj : ",obj)
+        # print("obj : ",obj)
         serializer_class = SendHousePhotoSerializer(obj, many=True)
-        print("data[0] : ",serializer_class.data[0])
+        # print("data[0] : ",serializer_class.data[0])
+        return Response(serializer_class.data)
+    
+@api_view(['POST',])
+@permission_classes((permissions.AllowAny,))
+def get_dog_customer_matched_photo_view(request):
+    if request.method == 'POST':
+        dog_obj = Dog.objects.get(id=request.data['dog_id'])
+        user_obj = User.objects.get(id=request.data['user_id'])
+        serializer_class=SendHousePhotoSerializer()
+        
+        if HousePhoto.objects.filter(dog=dog_obj).filter(user=user_obj).exists():
+            obj = HousePhoto.objects.filter(dog=dog_obj).filter(user=user_obj)
+            serializer_class = SendHousePhotoSerializer(obj,many=True)
+        
         return Response(serializer_class.data)

@@ -6,5 +6,5 @@ router = routers.DefaultRouter()
 router.register(r'',views.DogViewSet)
 
 urlpatterns = [
-    path('',include(router.urls)),
+    path('list/',include(router.urls)),
 ]

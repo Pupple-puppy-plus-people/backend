@@ -1,3 +1,4 @@
+from csv import excel
 from rest_framework import serializers
 from .models import HousePhoto
 from users.models import User
@@ -16,7 +17,7 @@ class HousePhotoSerializer(serializers.Serializer):
             self.dog_id = data['dog_id']
         if 'image' in data:
             self.image = data['image']
-        print(self.email, " ",self.dog_id," ",self.image)
+        # print(self.email, " ",self.dog_id," ",self.image)
 
     def save(self):
         data = {}
@@ -36,6 +37,7 @@ class HousePhotoSerializer(serializers.Serializer):
                     dog=dog,
                     photo=self.image,
                     ispass=False,
+                    username=user.username
                 )
                 #print("여기까지는되는거333333???", housephoto)
                 housephoto.save()
@@ -50,10 +52,12 @@ class HousePhotoSerializer(serializers.Serializer):
 class SendHousePhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = HousePhoto
-        exclude = ('id',)
-
-
-
-
-
+        # exclude = ('id',)
+        fields = (
+            'photo',
+            'ispass',
+            'user',
+            'dog',
+            'username',
+        )
 

@@ -1,4 +1,3 @@
-from ast import walk
 from django.contrib import admin
 
 # Register your models here.

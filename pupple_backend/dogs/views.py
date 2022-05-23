@@ -11,7 +11,11 @@ from photologue.models import Photo
 from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+from django.core.files.base import ContentFile
 
+
+import base64
+import requests
 
 class DogViewSet(viewsets.ModelViewSet):
     # queryset = Dog.objects.all().order_by('id')
@@ -76,8 +80,22 @@ def updatephoto_view(request):
     if request.method == 'POST':
         #serializer = DogSerializer(data=request.data)
         #obj = serializer.save()
-        #image = request.POST.get(image=request.data['image'])
-        print("LOG raw image :: ")
+        image = request.data['image']
+        #print("LOG raw image ::", image, len(image))
         #obj = create_photo(image)
-        #print("LOG url image :: ", obj)
-        return Response("hello")
+        obj = ContentFile(image) #, name="dogimage1.png"
+        print("LOG url image :: ", obj, obj.name)
+        
+        
+        # DB url source
+        queryset = Dog.objects.all()
+        field_object = Dog._meta.get_field('image')
+
+        for a in queryset:
+            url = field_object.value_from_object(a)
+            dog_image = base64.b64encode(requests.get(url).content)
+            print("image_url", url)
+            print("dog_image", len(dog_image))
+
+
+        return Response(obj)

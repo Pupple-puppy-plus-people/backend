@@ -50,6 +50,9 @@ INSTALLED_APPS = [
     'photologue',
     'sortedm2m',
     'django.contrib.sites',
+    # 채팅 관련 앱 추가 
+    'channels',
+    'chat',
 
 ]
 
@@ -153,3 +156,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = 'data/media/' # 원래 맨앞에 / 붙는데 오류 안나나
+
+
+# Channels
+ASGI_APPLICATION = 'api.routing.application'

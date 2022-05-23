@@ -46,10 +46,10 @@ class SurveySerializer(serializers.Serializer):
     def save(self):
         data = {}
         try:
-            print("try sentence")
+            # print("try sentence")
             user = User.objects.get(id=self.user_id)
             dog = Dog.objects.get(id=self.dog_id)
-            print("user = ",user,"   dog = ",dog)
+            # print("user = ",user,"   dog = ",dog)
 
             if Survey.objects.filter(user=user, dog=dog).exists():
                 Survey.objects.filter(user=user, dog=dog).update(
@@ -118,10 +118,10 @@ class AgreementSerializer(serializers.Serializer):
     def save(self):
         data = {}
         try:
-            print("try sentence")
+            # print("try sentence")
             user = User.objects.get(id=self.user_id)
             dog = Dog.objects.get(id=self.dog_id)
-            print("user = ",user,"   dog = ",dog)
+            # print("user = ",user,"   dog = ",dog)
 
             if Agreement.objects.filter(user=user, dog=dog).exists():
                 Agreement.objects.filter(user=user, dog=dog).update(

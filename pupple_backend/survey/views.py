@@ -22,11 +22,11 @@ def update_survey_view(request):
 @permission_classes((permissions.AllowAny,))
 def getsurvey_view(request):
     if request.method == 'POST':
-        print("get_survey")
+        # print("get_survey")
         user = User.objects.get(id=request.data['user_id'])
         dog = Dog.objects.get(id=request.data['dog_id'])
         survey = Survey.objects.get(user=user,dog=dog)
-        print(survey)
+        # print(survey)
         data={}
         data['user_name']=survey.user.username
         data['response']="success"
@@ -69,7 +69,7 @@ def update_agreement_view(request):
 @permission_classes((permissions.AllowAny,))
 def get_agreement_view(request):
     if request.method == 'POST':
-        print("get_survey")
+        # print("get_survey")
         user = User.objects.get(id=request.data['user_id'])
         dog = Dog.objects.get(id=request.data['dog_id'])
         agreement = Agreement.objects.get(user=user,dog=dog)

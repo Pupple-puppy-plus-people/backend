@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from .serializers import HousePhotoSerializer,SendHousePhotoSerializer
 from .models import HousePhoto
 from dogs.models import Dog
-from users.models import User
+from users.models import User, Wishlist
 
 
 @api_view(['POST',])
@@ -85,3 +85,36 @@ def get_dog_customer_matched_photo_view(request):
             serializer_class = SendHousePhotoSerializer(obj,many=True)
         
         return Response(serializer_class.data)
+
+
+@api_view(['POST', ])
+@permission_classes((permissions.AllowAny,))
+def update_house_photo_pass(request):
+    if request.method == 'POST':
+        dog_obj = Dog.objects.get(id=request.data['dog_id'])
+        user_obj = User.objects.get(id=request.data['user_id'])
+        did_pass = request.data['pass'] # pass면 True로, fail이면 False로
+        data={}
+        try:
+            housephoto_obj = HousePhoto.objects.get(user=user_obj,dog=dog_obj)
+            if not housephoto_obj.ispass : # false일때만 True로 업데이트
+                HousePhoto.objects.filter(user=user_obj,dog=dog_obj).update(ispass=did_pass)
+
+                if did_pass:
+                    print("did_pass : ", did_pass)
+                    wishlist_obj = Wishlist.objects.get(user=user_obj, dog_id=dog_obj)
+                    # print("wishlist_obj : ", wishlist_obj.total)
+                    total_point = wishlist_obj.total
+                    total_point += 100
+                    print("total_point : ", total_point)
+                    Wishlist.objects.filter(user=user_obj, dog_id=dog_obj).update(template4=100, total=total_point)
+                    print("update house photo and get updated object: ",Wishlist.objects.get(user=user_obj,dog_id=dog_obj))
+                data['request'] = "success"
+
+            else:
+                data['request'] = "already full"
+        except:
+            data['error'] = "fail"
+
+
+        return Response(data)

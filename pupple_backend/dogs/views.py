@@ -38,6 +38,7 @@ class DogViewSet(viewsets.ModelViewSet):
         user_id = self.request.GET.get('user_id',None)
  
         if id:
+            print("request ID:", id)
             queryset = queryset.filter(id=id)
         if gender:
             queryset = queryset.filter(gender=gender)
@@ -60,7 +61,26 @@ class DogViewSet(viewsets.ModelViewSet):
         if user_id:
             queryset = queryset.filter(user_id=user_id)   
 
-        return queryset.order_by('id')
+        # DB url source
+        field_object = Dog._meta.get_field('image')
+
+        queryset = queryset.order_by('id')
+
+        #print("send")
+        ''' http면 base64로 보내줌 -> 느림
+        for i, dog in enumerate(queryset): # 확장성 생각하면 아예 DB에 이미지 필드를 text필드로 바꾸기 
+            #print(dog)
+            url = field_object.value_from_object(dog)
+            if url.startswith('https'):
+                #print("url", url)
+                response = requests.get(url).content
+                #print("response", response)     
+                dog_image = base64.b64encode(response)
+                #print("dog_image convert to base64", len(dog_image))
+                setattr(queryset[i],'image',dog_image)
+                #print("->", queryset[i].__dict__)
+        '''
+        return queryset
 
 
 @api_view(['POST'])

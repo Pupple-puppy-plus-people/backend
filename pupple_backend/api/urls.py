@@ -22,5 +22,4 @@ urlpatterns = [
     path('housephoto/',include('house_photo.urls')),
     path('passcondition/',include('pass_condition.urls')),
     path('photologue/', include('photologue.urls', namespace='photologue')),
-    path('chat/',include('chat.urls')), # r은 정규표현식, ^는 정규표현식 시작
 ]

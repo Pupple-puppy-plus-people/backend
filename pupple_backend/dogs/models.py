@@ -13,7 +13,7 @@ from django.db import models
 class Dog(models.Model):
     registration_number = models.CharField(max_length=50, blank=True, null=True)
 
-    image = models.CharField(max_length=128, blank=True, null=True)
+    image = models.CharField(max_length=128, blank=True, null=True) # models.TextField()
     #image = models.CharField('photologue.Photo',null=True,blank=True,on_delete=models.SET_NULL,)
     
     name = models.CharField(max_length=50, blank=True, null=True)

@@ -1,6 +1,7 @@
-from django.conf.urls import url
-from . import consumers
+from django.urls import path
+from . import views
 
 urlpatterns = [
-        url('ws/chat/<room_name>/', consumers.ChatConsumer),
+        #path('', views.index, name='index'),
+        #path(r'^(?P<room_name>[^/]+)/$', views.room, name='room'),
 ]

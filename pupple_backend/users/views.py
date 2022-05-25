@@ -1,3 +1,4 @@
+import re
 from django.contrib.auth.hashers import check_password
 from django.shortcuts import render
 
@@ -132,10 +133,21 @@ def wishlistDel_view(request):
 @permission_classes([permissions.AllowAny, ])
 def getAllWish_view(request):
     if request.method == 'POST':
-        user = User.objects.get(email=request.data['email'])
 
-
-        obj = Wishlist.objects.filter(user=user)
+        obj = None
+        # email 말고 dog_id도 받으려고 추가 하다보니 변경됨 -> 여쭤보기! 
+        try:
+            user = User.objects.get(email=request.data['email'])
+            obj = Wishlist.objects.filter(user=user)
+        except KeyError:
+            pass
+        
+        try:
+            dog_id = request.data['dog_id']
+            obj = Wishlist.objects.filter(dog_id=dog_id)
+        except KeyError:
+            pass
+        
         serializer_class = WishListSerializer2(obj, many=True)
         print(serializer_class)
         # serializer_class = WishListSerializer2(obj)
@@ -149,3 +161,4 @@ def deleteAllWish_view(request):
     if request.method == 'POST':
         Wishlist.objects.all().delete()
         return Response("delete all")
+

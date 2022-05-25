@@ -159,4 +159,12 @@ MEDIA_ROOT = 'data/media/' # 원래 맨앞에 / 붙는데 오류 안나나
 
 
 # Channels
-ASGI_APPLICATION = 'api.routing.application'
+ASGI_APPLICATION = 'pupple_backend.asgi.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}

@@ -3,6 +3,8 @@ from django.db import models
 from users.models import User
 from dogs.models import Dog
 
+from django.utils import timezone
+
 # Create your models here.
 class Chat(models.Model):
     
@@ -15,9 +17,12 @@ class Chat(models.Model):
     # 강아지 
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE, related_name="chat")
     # 구매자
-    customer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="chat")
+    customer = models.IntegerField()
     # 판매자
     seller = models.IntegerField()
+    # 메시지 시간
+    timestamp = models.DateTimeField(default=timezone.now) #만들어진 시간
+
 
     class Meta:
         db_table = 'chat'

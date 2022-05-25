@@ -3,6 +3,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 
 from channels.db import database_sync_to_async
 from .models import Chat
+from dogs.models import Dog
 
 class ChatConsumer(AsyncWebsocketConsumer):
     
@@ -21,6 +22,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
         await self.accept()
 
+        await get_chat_messages(self.room_name)
+        # 이전 메시지들 보내기 ** 
+
 
     # websocket 연결 종료 시 실행
     async def disconnect(self, close_code):
@@ -37,7 +41,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         message = text_data_json
 
         print("message :", message) 
-        #create_room_chat_message(self.scope['url_route']['kwargs']['room_name'], message)
+        await create_room_chat_message(self.scope['url_route']['kwargs']['room_name'], text_data)
 
         # 클라이언트로부터 받은 메세지를 다시 클라이언트로 보내준다.
         await (self.channel_layer.group_send)(
@@ -58,36 +62,28 @@ class ChatConsumer(AsyncWebsocketConsumer):
             await self.send(text_data=json.dumps({
                 'message': message
             }))
-
+    
 
 @database_sync_to_async
 def create_room_chat_message(room_number, message): # 메시지 저장
     
     room_info = room_number.split(".")
-    dog = room_info[0]
-    customer = room_info[1]
-    seller = room_info[2]
+    dog_id = int(room_info[0])
+    dog = Dog.objects.get(id=dog_id)
+    customer = int(room_info[1])
+    seller = int(room_info[2])
+
+    print("upload message to CHAT DB")
     return Chat.objects.create(room_number=room_number, message=message, dog=dog, customer=customer, seller=seller)
 
-'''
-@database_sync_to_async
-def get_chat_messages(room, page_number): # 메시지 출력
-	try:
-		qs = Chat.objects.by_room(room)
-		p = Paginator(qs, DEFAULT_ROOM_CHAT_MESSAGE_PAGE_SIZE)
 
-		payload = {}
-		messages_data = None
-		new_page_number = int(page_number)  
-		if new_page_number <= p.num_pages:
-			new_page_number = new_page_number + 1
-			s = LazyRoomChatMessageEncoder()
-			payload['messages'] = s.serialize(p.page(page_number).object_list)
-		else:
-			payload['messages'] = "None"
-		payload['new_page_number'] = new_page_number
-		return json.dumps(payload)
-	except Exception as e:
-		print("EXCEPTION: " + str(e))
-	return None
-'''
+@database_sync_to_async
+def get_chat_messages(room_number): # 메시지 출력
+    messages = Chat.objects.filter(room_number=room_number)
+    #payload = {}
+    #payload['messages'] = messages
+    print("DB에서 가져옴: ", messages)
+    #payload['new_page_number'] = new_page_number
+    return None #json.dumps(payload)
+
+

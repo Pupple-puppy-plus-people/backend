@@ -1,3 +1,4 @@
+from email import message
 from django.utils.safestring import mark_safe
 import json
 from asgiref.sync import sync_to_async
@@ -51,24 +52,30 @@ def get_chat_messages_view(request):
 
 @api_view(['POST'])
 @permission_classes((permissions.AllowAny,))
-def get_unread_chat_messages_view(request):
+def get_unread_chat_check_view(request):
+    data = {}
     if request.method == 'POST':
         #serializer = DogSerializer(data=request.data)
         room_number = request.data['room_number']
+        user_type = request.data['user_type']
        
         messages = Chat.objects.filter(room_number=room_number).order_by('timestamp')
-        #payload = {}
-        #payload['messages'] = messages
 
-        #field_object = Chat._meta.get_field('message')
+        if user_type == 'customer':
+            messages = messages.filter(user_type='seller', received=False)
+        if user_type == 'seller':
+            messages = messages.filter(user_type='customer', received=False)
         
-        #message_history = []
+        print("messages", messages, room_number, user_type)
+        if messages.exists():
+            data['unread'] = "true"
+            print("true")
+            return Response(data)
 
-        #for message in messages:
-            #field_value = field_object.value_from_object(message)
-            #message_history.append(field_value)
+        data['unread'] = "false"
+        print("false")
 
-        return Response(messages)
+        return Response(data)
 
 
 @api_view(['POST'])

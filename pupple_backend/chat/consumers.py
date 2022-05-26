@@ -22,10 +22,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
         await self.accept()
 
-        await get_chat_messages(self.room_name)
-        # 이전 메시지들 보내기 ** 
-
-
     # websocket 연결 종료 시 실행
     async def disconnect(self, close_code):
          # group에서 제거 --> 다음 단계) 대화 내용이 남는 단톡방을 만들고 싶은데 
@@ -41,7 +37,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
         message = text_data_json
 
         print("message :", message) 
-        await create_room_chat_message(self.scope['url_route']['kwargs']['room_name'], text_data)
+        user_type = text_data_json['user']['name']
+        print("Debug:", user_type)
+        await create_room_chat_message(self.scope['url_route']['kwargs']['room_name'], text_data, user_type)
 
         # 클라이언트로부터 받은 메세지를 다시 클라이언트로 보내준다.
         await (self.channel_layer.group_send)(
@@ -65,7 +63,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
     
 
 @database_sync_to_async
-def create_room_chat_message(room_number, message): # 메시지 저장
+def create_room_chat_message(room_number, message, user_type): # 메시지 저장
     
     room_info = room_number.split(".")
     dog_id = int(room_info[0])
@@ -74,16 +72,5 @@ def create_room_chat_message(room_number, message): # 메시지 저장
     seller = int(room_info[2])
 
     print("upload message to CHAT DB")
-    return Chat.objects.create(room_number=room_number, message=message, dog=dog, customer=customer, seller=seller)
-
-
-@database_sync_to_async
-def get_chat_messages(room_number): # 메시지 출력
-    messages = Chat.objects.filter(room_number=room_number)
-    #payload = {}
-    #payload['messages'] = messages
-    print("DB에서 가져옴: ", messages)
-    #payload['new_page_number'] = new_page_number
-    return None #json.dumps(payload)
-
+    return Chat.objects.create(room_number=room_number, message=message, dog=dog, customer=customer, seller=seller, user_type = user_type) #     user_type = user_type
 

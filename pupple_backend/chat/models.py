@@ -22,6 +22,8 @@ class Chat(models.Model):
     seller = models.IntegerField()
     # 메시지 시간
     timestamp = models.DateTimeField(default=timezone.now) #만들어진 시간
+    # user type (메시지 보낸 사람이  구매자인지 판매자인지)
+    user_type = models.CharField(max_length=50, default=None)
 
 
     class Meta:

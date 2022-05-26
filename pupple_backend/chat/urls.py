@@ -1,7 +1,11 @@
-from django.urls import path
-from . import views
+
+from django.urls import path,include
+
+from .views import get_chat_messages_view, update_unread_chat_to_read_view
+app_name = "chat"
 
 urlpatterns = [
         #path('', views.index, name='index'),
-        #path(r'^(?P<room_name>[^/]+)/$', views.room, name='room'),
+        path('history/', get_chat_messages_view, name='get_chat_messages'),
+        path('update/', update_unread_chat_to_read_view, name='update_unread_chat_to_read'),
 ]

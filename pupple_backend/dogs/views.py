@@ -1,7 +1,21 @@
+from rest_framework.response import Response
 from rest_framework import viewsets
 from .serializers import DogSerializer
 from .models import Dog
 # Create your views here.
+
+from datetime import datetime
+from django.utils.text import slugify
+from photologue.models import Photo
+
+from rest_framework import permissions
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from django.core.files.base import ContentFile
+
+
+import base64
+import requests
 
 class DogViewSet(viewsets.ModelViewSet):
     # queryset = Dog.objects.all().order_by('id')
@@ -11,6 +25,7 @@ class DogViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = Dog.objects.all()
         
+        id = self.request.GET.get('id',None)
         gender = self.request.GET.get('gender',None)
         kind = self.request.GET.get('kind',None)
         desexing = self.request.GET.get('desexing',None)
@@ -22,6 +37,9 @@ class DogViewSet(viewsets.ModelViewSet):
         person_personality = self.request.GET.get('person_personality',None)
         user_id = self.request.GET.get('user_id',None)
  
+        if id:
+            print("request ID:", id)
+            queryset = queryset.filter(id=id)
         if gender:
             queryset = queryset.filter(gender=gender)
         if kind:
@@ -43,4 +61,61 @@ class DogViewSet(viewsets.ModelViewSet):
         if user_id:
             queryset = queryset.filter(user_id=user_id)   
 
-        return queryset.order_by('id')
+        # DB url source
+        field_object = Dog._meta.get_field('image')
+
+        queryset = queryset.order_by('id')
+
+        #print("send")
+        ''' http면 base64로 보내줌 -> 느림
+        for i, dog in enumerate(queryset): # 확장성 생각하면 아예 DB에 이미지 필드를 text필드로 바꾸기 
+            #print(dog)
+            url = field_object.value_from_object(dog)
+            if url.startswith('https'):
+                #print("url", url)
+                response = requests.get(url).content
+                #print("response", response)     
+                dog_image = base64.b64encode(response)
+                #print("dog_image convert to base64", len(dog_image))
+                setattr(queryset[i],'image',dog_image)
+                #print("->", queryset[i].__dict__)
+        '''
+        return queryset
+
+
+@api_view(['POST'])
+@permission_classes((permissions.AllowAny,))
+def updatephoto_view(request):
+    print("Here")
+    def create_photo(image):
+        title = f'{datetime.now()}'
+        slug = slugify(title)
+        photo = Photo.objects.create(
+            title=title,
+            slug=slug,
+            image=image,
+        )
+        return photo
+
+    if request.method == 'POST':
+        #serializer = DogSerializer(data=request.data)
+        #obj = serializer.save()
+        image = request.data['image']
+        #print("LOG raw image ::", image, len(image))
+        #obj = create_photo(image)
+        obj = ContentFile(image) #, name="dogimage1.png"
+        print("LOG url image :: ", obj, obj.name)
+        
+        
+        # DB url source
+        queryset = Dog.objects.all()
+        field_object = Dog._meta.get_field('image')
+
+        for a in queryset:
+            url = field_object.value_from_object(a)
+            dog_image = base64.b64encode(requests.get(url).content)
+            print("image_url", url)
+            print("dog_image", len(dog_image))
+
+
+        return Response(obj)

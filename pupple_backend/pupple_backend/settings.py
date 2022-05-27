@@ -24,6 +24,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+# photologue setting
+SITE_ID = 1
 
 # Application definition
 
@@ -45,6 +47,15 @@ INSTALLED_APPS = [
     #'api.apps.ApiConfig',
     'users.apps.UsersConfig',
     'survey',
+    # Django Image Library - Photologue
+    'photologue',
+    'sortedm2m',
+    'django.contrib.sites',
+    # 채팅 관련 앱 추가 
+    'channels',
+    'chat',
+
+>>>>>>> origin/chatting
 ]
 
 MIDDLEWARE = [
@@ -142,3 +153,20 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Phtologue
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = 'data/media/' # 원래 맨앞에 / 붙는데 오류 안나나
+
+
+# Channels
+ASGI_APPLICATION = 'pupple_backend.asgi.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}

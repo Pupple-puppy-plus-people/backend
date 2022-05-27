@@ -31,6 +31,8 @@ class User(AbstractUser):
 class Wishlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,related_name="wishlist")
     dog_id = models.ForeignKey(Dog, on_delete=models.CASCADE, related_name="wishlist")
+    survey = models.IntegerField(default=0)
+    agreement = models.IntegerField(default=0)
     template1 = models.IntegerField(default=0)
     template2 = models.IntegerField(default=0)
     template3 = models.IntegerField(default=0)

@@ -22,5 +22,6 @@ from rest_framework import routers
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/',include("api.urls")),
+    path('chat/',include('chat.urls')), # r은 정규표현식, ^는 정규표현식 시작
     # path('users/',include("users.urls")),
 ]

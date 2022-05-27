@@ -55,7 +55,6 @@ INSTALLED_APPS = [
     'channels',
     'chat',
 
->>>>>>> origin/chatting
 ]
 
 MIDDLEWARE = [

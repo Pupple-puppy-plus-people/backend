@@ -6,5 +6,6 @@ router = routers.DefaultRouter()
 router.register(r'',views.TimeStampViewSet)
 
 urlpatterns = [
-    path('',include(router.urls)),
+    path('get/',include(router.urls)),
+    path('add/',views.updateTimestamp_view,name='updateTimestamp'),
 ]

@@ -134,21 +134,21 @@ def wishlistDel_view(request):
 def getAllWish_view(request):
     if request.method == 'POST':
 
-        obj = None
+        queryset = Wishlist.objects.all()
         # email 말고 dog_id도 받으려고 추가 하다보니 변경됨 -> 여쭤보기! 
         try:
             user = User.objects.get(email=request.data['email'])
-            obj = Wishlist.objects.filter(user=user)
+            queryset = queryset.filter(user=user)
         except KeyError:
             pass
         
         try:
             dog_id = request.data['dog_id']
-            obj = Wishlist.objects.filter(dog_id=dog_id)
+            queryset = queryset.filter(dog_id=dog_id)
         except KeyError:
             pass
         
-        serializer_class = WishListSerializer2(obj, many=True)
+        serializer_class = WishListSerializer2(queryset, many=True)
         print(serializer_class)
         # serializer_class = WishListSerializer2(obj)
 

@@ -4,7 +4,9 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register(r'',views.TimeStampViewSet)
+app_name = "timestamp"
 
 urlpatterns = [
-    path('',include(router.urls)),
+    path('get/',include(router.urls)),
+    path('add/',views.updateTimestamp_view,name='updateTimestamp'),
 ]

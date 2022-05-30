@@ -38,7 +38,6 @@ class DogViewSet(viewsets.ModelViewSet):
         user_id = self.request.GET.get('user_id',None)
  
         if id:
-            print("request ID:", id)
             queryset = queryset.filter(id=id)
         if gender:
             queryset = queryset.filter(gender=gender)

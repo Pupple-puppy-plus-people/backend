@@ -77,10 +77,11 @@ def get_agreement_view(request):
         data={}
         data['user_name']=agreement.user.username
         data['response']="success"
-        data['reason']=agreement.person_info
-        data['family'] = agreement.location_info
-        data['num_family'] = agreement.chit_penalty
-        data['family_agree'] = agreement.cannot_adopt
-        data['experience'] = agreement.more_info
+        data['person_info']=agreement.person_info
+        data['location_info'] = agreement.location_info
+        data['chit_penalty'] = agreement.chit_penalty
+        data['cannot_adopt'] = agreement.cannot_adopt
+        data['more_info'] = agreement.more_info
+        data['dog_entrance'] = agreement.dog_entrance
         # data = serializer.save()
         return Response(data)

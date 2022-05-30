@@ -52,12 +52,12 @@ class HousePhotoSerializer(serializers.Serializer):
 class SendHousePhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = HousePhoto
-        # exclude = ('id',)
-        fields = (
-            'photo',
-            'ispass',
-            'user',
-            'dog',
-            'username',
-        )
+        exclude = ('id',)
+        # fields = (
+        #     'photo',
+        #     'ispass',
+        #     'user',
+        #     'dog',
+        #     'username',
+        # )
 

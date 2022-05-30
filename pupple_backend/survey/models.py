@@ -33,6 +33,7 @@ class Agreement(models.Model):
     chit_penalty = models.BooleanField(null=True,default=False)
     cannot_adopt = models.BooleanField(null=True,default=False)
     more_info = models.BooleanField(null=True,default=False)
+    dog_entrance = models.BooleanField(null=True,default=False)
 
     def __str__(self):
         return self.user.email + " " + self.dog.name

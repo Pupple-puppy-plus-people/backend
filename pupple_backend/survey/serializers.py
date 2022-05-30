@@ -103,6 +103,7 @@ class AgreementSerializer(serializers.Serializer):
     chit_penalty = serializers.BooleanField()
     cannot_adopt = serializers.BooleanField()
     more_info = serializers.BooleanField()
+    dog_entrance = serializers.BooleanField()
 
     def __init__(self,data):
         self.user_id = data['user_id']
@@ -111,6 +112,7 @@ class AgreementSerializer(serializers.Serializer):
         self.location_info = data['location_info']
         self.chit_penalty = data['chit_penalty']
         self.cannot_adopt = data['cannot_adopt']
+        self.dog_entrance = data['dog_entrance']
 
         self.more_info = data['more_info']
 
@@ -126,10 +128,11 @@ class AgreementSerializer(serializers.Serializer):
             if Agreement.objects.filter(user=user, dog=dog).exists():
                 Agreement.objects.filter(user=user, dog=dog).update(
                     person_info=self.person_info,
-                location_info = self.location_info,
-                chit_penalty = self.chit_penalty,
-                cannot_adopt = self.cannot_adopt,
-                more_info = self.more_info,
+                    location_info = self.location_info,
+                    chit_penalty = self.chit_penalty,
+                    cannot_adopt = self.cannot_adopt,
+                    more_info = self.more_info,
+                    dog_entrance = self.dog_entrance,
                 )
             else:
                 agreement = Agreement(
@@ -139,6 +142,7 @@ class AgreementSerializer(serializers.Serializer):
                     location_info=self.location_info,
                     chit_penalty=self.chit_penalty,
                     cannot_adopt=self.cannot_adopt,
+                    dog_entrance=self.dog_entrance,
                     more_info=self.more_info,
                 )
                 agreement.save()

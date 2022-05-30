@@ -82,7 +82,7 @@ def get_dog_customer_matched_photo_view(request):
         
         if HousePhoto.objects.filter(dog=dog_obj).filter(user=user_obj).exists():
             obj = HousePhoto.objects.filter(dog=dog_obj).filter(user=user_obj)
-            serializer_class = SendHousePhotoSerializer(obj,many=True)
+            serializer_class = SendHousePhotoSerializer(obj, many=True)
         
         return Response(serializer_class.data)
 

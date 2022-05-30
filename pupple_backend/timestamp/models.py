@@ -8,7 +8,7 @@ class TimeStamp(models.Model):
     dog = models.ForeignKey(Dog, on_delete=models.CASCADE, related_name="timestamp")
     
     day = models.IntegerField(blank=True,null=True)
-    press_time = models.CharField(max_length=8, blank=True, null=True)
+    press_time = models.CharField(max_length=100, blank=True, null=True)
     start_time = models.IntegerField(blank=True,null=True) 
     evaluate = models.BooleanField(blank=True,default=False,null=True)
    

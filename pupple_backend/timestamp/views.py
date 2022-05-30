@@ -1,3 +1,5 @@
+from errno import EBADARCH
+from tracemalloc import start
 from django.shortcuts import render
 from rest_framework import viewsets
 from .serializers import TimeStampSerializer, TimeStampSerializer2
@@ -26,24 +28,25 @@ class TimeStampViewSet(viewsets.ModelViewSet):
         press_time = self.request.GET.get('press_time',None)
         start_time = self.request.GET.get('start_time',None)
         evaluate = self.request.GET.get('evaluate',None)
-
-        if queryset.exists():
-            if user:
-                user_obj= User.objects.get(id=user)
-                queryset = queryset.filter(user=user_obj)
-            if dog:
-                dog_obj = Dog.objects.filter(id=dog)
-                queryset = queryset.filter(dog=dog_obj)
-            if day:
-                queryset = queryset.filter(day=day)
-            if press_time:
-                queryset = queryset.filter(press_time=press_time)
-            if start_time:
-                queryset = queryset.filter(start_time=start_time)
-            if evaluate:
-                queryset = queryset.filter(evaluate=evaluate)
-        else:
-            print("HIHHI")
+        try:
+            if queryset.exists():
+                if user:
+                    queryset = queryset.filter(user=user)
+                if dog:
+                    queryset = queryset.filter(dog=dog)
+                if day:
+                    queryset = queryset.filter(day=day)
+                if press_time:
+                    queryset = queryset.filter(press_time=press_time)
+                if start_time:
+                    queryset = queryset.filter(start_time=start_time)
+                if evaluate:
+                    queryset = queryset.filter(evaluate=evaluate)
+            else:
+                print("HIHHI")
+        except Exception as e:
+            print("HIHHI1")
+            print(e)
         return queryset
 
 

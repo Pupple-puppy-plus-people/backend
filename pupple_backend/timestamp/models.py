@@ -13,4 +13,4 @@ class TimeStamp(models.Model):
         db_table = 'timestamp_auth'
     
     def __str__(self):
-        return self.press_time
+        return self.press_time # self.userdog + 

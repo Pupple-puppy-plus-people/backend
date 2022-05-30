@@ -1,4 +1,4 @@
-import re
+
 from django.contrib.auth.hashers import check_password
 from django.shortcuts import render
 
@@ -102,6 +102,7 @@ def wishlistAdd_view(request):
 
         # serializer가 data 맛을 보고 이게 옳다 싶으면
 
+
         # serializer.save()를 거치면 저장을 한다.
         obj = serializer.save()
 
@@ -161,4 +162,3 @@ def deleteAllWish_view(request):
     if request.method == 'POST':
         Wishlist.objects.all().delete()
         return Response("delete all")
-

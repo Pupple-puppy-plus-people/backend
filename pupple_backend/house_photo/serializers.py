@@ -1,3 +1,4 @@
+
 from csv import excel
 from rest_framework import serializers
 from .models import HousePhoto
@@ -38,6 +39,7 @@ class HousePhotoSerializer(serializers.Serializer):
                     photo=self.image,
                     ispass=False,
                     username=user.username
+
                 )
                 #print("여기까지는되는거333333???", housephoto)
                 housephoto.save()

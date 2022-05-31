@@ -96,7 +96,9 @@ def update_house_photo_pass(request):
         did_pass = request.data['pass'] # pass면 True로, fail이면 False로
         data={}
         try:
+            print("tryyy")
             housephoto_obj = HousePhoto.objects.get(user=user_obj,dog=dog_obj)
+            print("housephoto_obj ", housephoto_obj)
             if not housephoto_obj.ispass : # false일때만 True로 업데이트
                 HousePhoto.objects.filter(user=user_obj,dog=dog_obj).update(ispass=did_pass)
 

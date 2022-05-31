@@ -10,6 +10,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+
+from dogs.models import Dog
 from .serializers import RegistrationUserSerializer, LoginUserSerializer, WishListSerializer, WishListSerializer2
 # from .models import Profile
 from .models import User, Wishlist
@@ -162,3 +164,46 @@ def deleteAllWish_view(request):
     if request.method == 'POST':
         Wishlist.objects.all().delete()
         return Response("delete all")
+    
+@api_view(['POST',])
+@permission_classes([permissions.AllowAny,])
+def updateProgress_view(request):
+    if request.method == 'POST':
+        user = User.objects.get(email=request.data['email'])
+        dog = Dog.objects.get(id=request.data['dog_id'])
+        obj = Wishlist.objects.get(user=user,dog_id=dog)
+        
+        total = 0
+        
+        if 'template1' in request.data:
+            newProgress = int(request.data['template1'],base=10)
+            Wishlist.objects.filter(user=user,dog_id=dog).update(template1 = newProgress)
+            if dog.floor_auth and dog.house_auth:
+                total = (newProgress + obj.template2 + obj.template3 + obj.template4) // 4
+            elif dog.floor_auth or dog.house_auth:
+                total = (newProgress + obj.template2 + obj.template3 + obj.template4) // 3
+            else:
+                total = (newProgress + obj.template2 + obj.template3 + obj.template4) // 2
+            Wishlist.objects.filter(user=user,dog_id=dog).update(total = total)
+        elif 'template2' in request.data:
+            newProgress = int(request.data['template2'],base=10)
+            Wishlist.objects.filter(user=user,dog_id=dog).update(template2 = newProgress)
+            if dog.floor_auth and dog.house_auth:
+                total = (obj.template1 + newProgress + obj.template3 + obj.template4) // 4
+            elif dog.floor_auth or dog.house_auth:
+                total = (obj.template1 + newProgress + obj.template3 + obj.template4) // 3
+            else:
+                total = (obj.template1 + newProgress + obj.template3 + obj.template4) // 2
+            Wishlist.objects.filter(user=user,dog_id=dog).update(total = total)
+        elif 'template4' in request.data:
+            newProgress = int(request.data['template4'],base=10)
+            Wishlist.objects.filter(user=user,dog_id=dog).update(template4 = newProgress)
+            if dog.floor_auth and dog.house_auth:
+                total = (obj.template1 + obj.template2 + obj.template3 + newProgress) // 4
+            elif dog.floor_auth or dog.house_auth:
+                total = (obj.template1 + obj.template2 + obj.template3 + newProgress) // 3
+            else:
+                total = (obj.template1 + obj.template2 + obj.template3 + newProgress) // 2
+            Wishlist.objects.filter(user=user,dog_id=dog).update(total = total)
+        return Response("update success")
+    

@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'timestamp',
     'house_photo',
     'pass_condition',
+    'mat_detector',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',

@@ -2,7 +2,7 @@
 from django.urls import path,include
 
 from .views import registration_view, login_view, wishlistDel_view, wishlistAdd_view, deleteAllWish_view, \
-    getAllWish_view  # 추가
+    getAllWish_view,updateProgress_view  # 추가
 app_name = "users"
 
 urlpatterns = [
@@ -12,4 +12,5 @@ urlpatterns = [
     path('wishlist/delete/', wishlistDel_view, name='delete_wishlist'),
     path('wishlist/deleteall/', deleteAllWish_view, name='deleteAllWish'),
     path('wishlist/', getAllWish_view, name='getAllWish'),
+    path('wishlist/updateprogress/',updateProgress_view,name='updateProgress'),
 ]

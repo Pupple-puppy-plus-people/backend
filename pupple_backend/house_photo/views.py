@@ -106,10 +106,15 @@ def update_house_photo_pass(request):
                     print("did_pass : ", did_pass)
                     wishlist_obj = Wishlist.objects.get(user=user_obj, dog_id=dog_obj)
                     # print("wishlist_obj : ", wishlist_obj.total)
-                    total_point = wishlist_obj.total
-                    total_point += 100
-                    print("total_point : ", total_point)
-                    Wishlist.objects.filter(user=user_obj, dog_id=dog_obj).update(template4=100, total=total_point)
+                    newProgress = 100
+                    Wishlist.objects.filter(user=user_obj,dog_id=dog_obj).update(template3 = newProgress)
+                    if dog_obj.floor_auth and dog_obj.house_auth:
+                        total = (wishlist_obj.template1 + wishlist_obj.template2 + newProgress + wishlist_obj.template4) // 4
+                    elif dog_obj.floor_auth or dog_obj.house_auth:
+                        total = (wishlist_obj.template1 + wishlist_obj.template2 + newProgress + wishlist_obj.template4) // 3
+                    else:
+                        total = (wishlist_obj.template1 + wishlist_obj.template2 + newProgress + wishlist_obj.template4) // 2
+                    Wishlist.objects.filter(user=user_obj,dog_id=dog_obj).update(total = total)
                     print("update house photo and get updated object: ",Wishlist.objects.get(user=user_obj,dog_id=dog_obj))
                 data['request'] = "success"
 

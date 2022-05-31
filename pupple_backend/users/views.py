@@ -195,6 +195,16 @@ def updateProgress_view(request):
             else:
                 total = (obj.template1 + newProgress + obj.template3 + obj.template4) // 2
             Wishlist.objects.filter(user=user,dog_id=dog).update(total = total)
+        elif 'template3' in request.data:
+            newProgress = int(request.data['template3'],base=10)
+            Wishlist.objects.filter(user=user,dog_id=dog).update(template3 = newProgress)
+            if dog.floor_auth and dog.house_auth:
+                total = (obj.template1 + obj.template2 + newProgress + obj.template4) // 4
+            elif dog.floor_auth or dog.house_auth:
+                total = (obj.template1 + obj.template2 + newProgress + obj.template4) // 3
+            else:
+                total = (obj.template1 + obj.template2 + newProgress + obj.template4) // 2
+            Wishlist.objects.filter(user=user,dog_id=dog).update(total = total)
         elif 'template4' in request.data:
             newProgress = int(request.data['template4'],base=10)
             Wishlist.objects.filter(user=user,dog_id=dog).update(template4 = newProgress)

@@ -35,7 +35,7 @@ def evaluateFloor_view(request):
         model.to(device)
         # load model parameter
         # model.load_state_dict(torch.load('matDetectModel.pt'))
-        model.load_state_dict(torch.load('/Users/errasi/capstone2022-1/backend/pupple_backend/mat_detector/matDetectModel.pt'))
+        model.load_state_dict(torch.load('/Users/mjjwa/pupple_organization/backend/pupple_backend/mat_detector/matDetectModel.pt'))
                 
         # start evaluate
         model.eval()
@@ -45,7 +45,8 @@ def evaluateFloor_view(request):
         
         # convert base64 to Image data type
         sliceBase64 = request.data['image']
-        img2data = base64.b64decode(sliceBase64[1:len(sliceBase64)-1])
+        print(sliceBase64[:10])
+        img2data = base64.b64decode(sliceBase64)
         dataBytesIO = io.BytesIO(img2data)
         image = Image.open(dataBytesIO).convert("RGB")
         
@@ -70,7 +71,9 @@ def evaluateFloor_view(request):
         newProgress = 0
         total = 0
         wishlistObj = Wishlist.objects.get(user=user,dog_id=dog)
+        print(bestScore)
         if bestScore > 0.5:
+            print('detected')
             serializer.evaluate(True)
             newProgress = 100
             Wishlist.objects.filter(user=user,dog_id=dog).update(template4 = newProgress)
@@ -82,6 +85,7 @@ def evaluateFloor_view(request):
                 total = (wishlistObj.template1 + wishlistObj.template2 + wishlistObj.template3 + newProgress) // 2
             Wishlist.objects.filter(user=user,dog_id=dog).update(total = total)
         else:
+            print('undetected')
             serializer.evaluate(False)
             newProgress = 0
             Wishlist.objects.filter(user=user,dog_id=dog).update(template4 = newProgress)

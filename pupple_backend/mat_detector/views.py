@@ -35,7 +35,7 @@ def evaluateFloor_view(request):
         model.to(device)
         # load model parameter
         # model.load_state_dict(torch.load('matDetectModel.pt'))
-        model.load_state_dict(torch.load('/Users/errasi/capstone2022-1/backend/pupple_backend/mat_detector/matDetectModel.pt'))
+        model.load_state_dict(torch.load('/Users/jewonrho/Documents/Capstone2022/backend/pupple_backend/mat_detector'))
                 
         # start evaluate
         model.eval()
@@ -100,7 +100,20 @@ def evaluateFloor_view(request):
 @permission_classes((permissions.AllowAny,))
 def getIimage_view(request):
     if request.method == 'POST':
-        user_name = request.data['user_name']
+        user_name=""
+        try:
+            user_name = request.data['user_name']
+        except KeyError:
+            pass
+
+        try:
+            user = User.objects.get(id=request.data['user_id'])
+            user_name = user.username
+        except KeyError:
+            pass
+
+
+
         dog_id = request.data['dog_id']
         
         obj = MatDetector.objects.get(user_name=user_name,dog_id=dog_id)

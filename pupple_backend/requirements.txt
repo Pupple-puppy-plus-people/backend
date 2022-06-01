@@ -126,8 +126,6 @@ tensorboard==2.9.0
 tensorboard-data-server==0.6.1
 tensorboard-plugin-wit==1.8.1
 tensorflow-estimator==2.9.0
-tensorflow-macos==2.9.0
-tensorflow-metal==0.5.0
 termcolor==1.1.0
 terminado==0.13.2
 testpath==0.6.0
@@ -153,7 +151,7 @@ hyperlink==21.0.0
 idna==3.3
 incremental==21.3.0
 msgpack==1.0.3
-Pillow==9.1.1
+Pillow==9.0.1
 psycopg2==2.9.3
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
@@ -162,7 +160,7 @@ pyOpenSSL==22.0.0
 pytz==2021.3
 requests==2.27.1
 service-identity==21.1.0
-six==1.16.0
+six==1.15.0
 sqlparse==0.4.2
 Twisted==22.4.0
 txaio==22.2.1

@@ -6,5 +6,6 @@ router = routers.DefaultRouter()
 router.register(r'',views.WalkAuthViewSet)
 
 urlpatterns = [
-    path('<str:userdog>/',include(router.urls)),
+    path('<str:userdog>/info/',include(router.urls)),
+    path('update/',views.updateWalkData_view,name='updateWalkData_view'),
 ]

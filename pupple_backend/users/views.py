@@ -176,7 +176,19 @@ def updateProgress_view(request):
         total = 0
         
         if 'template1' in request.data:
-            newProgress = int(request.data['template1'],base=10)
+            weight_count = request.data['my_count_total']/request.data['pass_count']
+            weight_time = request.data['my_time_total']/(request.data['pass_time']*request.data['my_count_total'])
+            weight_distance = request.data['my_distance_total']/(request.data['pass_distance']*request.data['my_count_total'])
+            print('count weight :   ',weight_count)
+            print('time weight :   ',weight_time)
+            print('distance weight :   ',weight_distance)
+            newProgress = (weight_count+weight_time+weight_distance)/3
+            if newProgress > 1:
+                newProgress = 100
+            else:
+                newProgress = newProgress * 100
+            print('newProgress :   ',newProgress)
+            
             Wishlist.objects.filter(user=user,dog_id=dog).update(template1 = newProgress)
             if dog.floor_auth and dog.house_auth:
                 total = (newProgress + obj.template2 + obj.template3 + obj.template4) // 4
@@ -215,5 +227,5 @@ def updateProgress_view(request):
             else:
                 total = (obj.template1 + obj.template2 + obj.template3 + newProgress) // 2
             Wishlist.objects.filter(user=user,dog_id=dog).update(total = total)
-        return Response("update success")
+        return Response(newProgress)
     

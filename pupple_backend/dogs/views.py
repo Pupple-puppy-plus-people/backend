@@ -1,6 +1,6 @@
 from rest_framework.response import Response
 from rest_framework import viewsets
-from .serializers import DogSerializer
+from .serializers import DogSerializer, DogSerializer2
 from .models import Dog
 # Create your views here.
 
@@ -82,19 +82,20 @@ class DogViewSet(viewsets.ModelViewSet):
         return queryset
 
 
+@api_view(['POST',])
+@permission_classes((permissions.AllowAny,))
+def updatedog_view(request):
+    if request.method == 'POST':
+        serializer = DogSerializer2(data=request.data)
+        obj = serializer.save()
+        return Response(obj)
+
+
+
 @api_view(['POST'])
 @permission_classes((permissions.AllowAny,))
 def updatephoto_view(request):
-    print("Here")
-    def create_photo(image):
-        title = f'{datetime.now()}'
-        slug = slugify(title)
-        photo = Photo.objects.create(
-            title=title,
-            slug=slug,
-            image=image,
-        )
-        return photo
+   
 
     if request.method == 'POST':
         #serializer = DogSerializer(data=request.data)

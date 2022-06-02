@@ -35,7 +35,8 @@ def evaluateFloor_view(request):
         model.to(device)
         # load model parameter
         # model.load_state_dict(torch.load('matDetectModel.pt'))
-        model.load_state_dict(torch.load('/Users/jewonrho/Documents/Capstone2022/backend/pupple_backend/mat_detector/matDetectModel.pt'))
+        # model.load_state_dict(torch.load('/Users/jewonrho/Documents/Capstone2022/backend/pupple_backend/mat_detector'))
+        model.load_state_dict(torch.load('/home/backend/pupple_backend/mat_detector/matDetectorModel.pt'))
                 
         # start evaluate
         model.eval()

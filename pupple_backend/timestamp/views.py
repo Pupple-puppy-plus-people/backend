@@ -1,4 +1,3 @@
-from errno import EBADARCH
 from tracemalloc import start
 from django.shortcuts import render
 from rest_framework import viewsets

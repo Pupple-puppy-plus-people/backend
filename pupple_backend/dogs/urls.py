@@ -9,7 +9,7 @@ app_name='dogs'
 
 urlpatterns = [
     path('list/',include(router.urls)),
-    path('add/',views.updatephoto_view),
+    path('add/',views.updatedog_view),
 ]
 
 #path('add/',views.updatephoto_view,name='post_dogphoto'),

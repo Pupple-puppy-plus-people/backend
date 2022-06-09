@@ -152,7 +152,7 @@ def getAllWish_view(request):
             pass
 
         serializer_class = WishListSerializer2(queryset, many=True)
-        print(serializer_class)
+        # print(serializer_class)
         # serializer_class = WishListSerializer2(obj)
 
        # return Response(obj_json)
@@ -179,9 +179,18 @@ def updateProgress_view(request):
             weight_count = request.data['my_count_total']/request.data['pass_count']
             weight_time = request.data['my_time_total']/(request.data['pass_time']*request.data['my_count_total'])
             weight_distance = request.data['my_distance_total']/(request.data['pass_distance']*request.data['my_count_total'])
+            
+            if weight_count>1:
+                weight_count = 1
+            if weight_distance > 1:
+                weight_distance = 1
+            if weight_time>1:
+                weight_time = 1
+            
             print('count weight :   ',weight_count)
             print('time weight :   ',weight_time)
             print('distance weight :   ',weight_distance)
+                            
             newProgress = (weight_count+weight_time+weight_distance)/3
             if newProgress > 1:
                 newProgress = 100

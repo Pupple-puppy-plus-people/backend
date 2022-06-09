@@ -36,7 +36,9 @@ def evaluateFloor_view(request):
         # load model parameter
         # model.load_state_dict(torch.load('matDetectModel.pt'))
         # model.load_state_dict(torch.load('/Users/jewonrho/Documents/Capstone2022/backend/pupple_backend/mat_detector'))
-        model.load_state_dict(torch.load('/home/backend/pupple_backend/mat_detector/matDetectorModel.pt'))
+        model.load_state_dict(torch.load('/Users/jewonrho/Documents/Capstone2022/backend/pupple_backend/mat_detector/matDetectModel.pt'))
+        #
+        # model.load_state_dict(torch.load('/home/backend/pupple_backend/mat_detector/matDetectorModel.pt'))
                 
         # start evaluate
         model.eval()
@@ -73,7 +75,7 @@ def evaluateFloor_view(request):
         total = 0
         wishlistObj = Wishlist.objects.get(user=user,dog_id=dog)
         print(bestScore)
-        if bestScore > 0.5:
+        if bestScore > 10:
             print('detected')
             serializer.evaluate(True)
             newProgress = 100
@@ -114,6 +116,7 @@ def getIimage_view(request):
         try:
             user = User.objects.get(id=request.data['user_id'])
             user_name = user.username
+            print("username :: ",user_name)
         except KeyError:
             pass
 
